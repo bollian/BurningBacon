@@ -13,7 +13,13 @@ all: $(lib_path) $(o_path) vector.o math.o
 clean:
 	rm -rf $(o_path)
 	rm -rf $(lib_path)
+
+rebuild: clean
 	make all
+
+debug: flags += -g
+debug: o_path = dbg
+debug: all
 
 math.o: $(src_path)/bbmath.h $(src_path)/bbmath.c
 	gcc $(src_path)/bbmath.c -o $(o_path)/math.o $(flags) $(paths)

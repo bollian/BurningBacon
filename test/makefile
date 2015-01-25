@@ -1,19 +1,17 @@
 flags = -std=c99 -L../lib -lBurningBacon
 paths = -I/home/calcifer/Documents/code/BurningBacon/src
 dir = bin
-dbg = -g
 
 # the release option
-all: bin vector
+all: $(dir) vector
 
 clean:
 	rm -rf bin
 	make all
 
-debug:
-	$(eval flags += $(dbg))
-	$(eval dir = dbg)
-	make vector
+debug: flags += -g
+debug: dir = dbg
+debug: all
 
 #math: math.c
 #	gcc math.c -o bin/math $(paths) $(flags)
