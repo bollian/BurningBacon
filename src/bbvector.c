@@ -5,12 +5,13 @@
 
 #include "bbvector.h"
 
-void vector_init(vector* const vec, const unsigned int chunk_size)
+void* vector_init(vector* const vec, const unsigned int chunk_size)
 {
 	vec->length = 0;
 	vec->chunk_size = chunk_size;
 	vec->capacity = chunk_size; // set to 1 instead of 0 so it's easy to double capacity later
 	vec->data = malloc(chunk_size); // capacity 1
+	return vec->data;
 }
 
 void vector_setCap(vector* const vec, const unsigned int cap)

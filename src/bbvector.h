@@ -13,10 +13,10 @@ typedef struct vector
 } vector;
 
 // functions dealing with memory management
-void vector_init(vector* const, const unsigned int);
-void vector_free(vector* const);
-void vector_setCap(vector* const, unsigned int);
-void vector_setCapExact(vector* const, unsigned int);
+extern void* vector_init(vector* const, const unsigned int);
+extern void vector_free(vector* const);
+extern void vector_setCap(vector* const, unsigned int);
+extern void vector_setCapExact(vector* const, unsigned int);
 
 // functions dealing with data management
 
@@ -26,10 +26,10 @@ void vector_setCapExact(vector* const, unsigned int);
   * data: the addresses of the data to be added
   * length: sizeof(*data)
   **/
-void vector_add(vector* const, const void* const);
+extern void vector_add(vector* const, const void* const);
 
-bool vector_remove(vector* const, const unsigned int);
-void* vector_insert(vector* const, const void* const, const unsigned int);
-void* vector_get(const vector* const, const unsigned int);
+extern bool vector_remove(vector* const, const unsigned int);
+extern void* vector_insert(vector* const, const void* const, const unsigned int);
+extern void* vector_get(const vector* const, const unsigned int);
 
 #endif // BURNINGBACON_VECTOR_H
