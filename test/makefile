@@ -6,7 +6,9 @@ dir = bin
 all: $(dir) vector
 
 clean:
-	rm -rf bin
+	rm -rf $(dir)
+
+rebuild: clean
 	make all
 
 debug: flags += -g
