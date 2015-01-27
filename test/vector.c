@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
 	{
 		printf("ERROR: Allows insertion from NULL address\n");
 	}
-	if (vector_insert(&vec, &x, vec.length + 2) || vector_insert(&vec, &x, (long)vec.data - 1))
+	if (vector_insert(&vec, &x, vec.length + 2))
 	{
 		printf("ERROR: Allows insertions to addresses outside vector bounds\n");
 	}
