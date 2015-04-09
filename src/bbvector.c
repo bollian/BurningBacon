@@ -45,6 +45,17 @@ void* vector_setCap(vector* const vec, const unsigned int cap)
 	}
 }
 
+void* vector_setCapExact(vector* const vec, const unsigned cap)
+{
+	void* new_data = realloc(vec->data, cap * vec->chunk_size);
+	if (new_data == NULL)
+	{
+		return NULL;
+	}
+	vec->data = new_data;
+	return vec->data;
+}
+
 void* vector_add(vector* const vec, const void* const data)
 {
 	 // make sure we have capacity, we know we will have one more member
