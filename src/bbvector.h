@@ -29,7 +29,7 @@ extern void vector_free(vector* const);
   * otherwise the address of the newly allocated data is returned
   **/
 extern void* vector_setCap(vector* const, unsigned int);
-extern void vector_setCapExact(vector* const, unsigned int);
+extern void* vector_setCapExact(vector* const, const unsigned int);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
