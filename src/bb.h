@@ -3,6 +3,7 @@
 
 // listed in alphabetical order :)
 #include "bbmath.h"
+#include "bbstring.h"
 #include "bbsystem.h"
 #include "bbvector.h"
 
