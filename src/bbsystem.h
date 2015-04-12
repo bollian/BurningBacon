@@ -3,6 +3,8 @@
 
 #include <stdbool.h>
 
-bool isLittleEndian();
+extern bool isLittleEndian();
+
+extern char* getTerminalParam(int, char* const * const, const char* const);
 
 #endif // BURNINGBACON_SYSTEM_H
