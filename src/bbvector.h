@@ -5,30 +5,37 @@
 
 typedef struct vector
 {
+	// the number of bytes that can be currently held in the vector
 	unsigned int capacity;
 	unsigned int length;
 	// the size of each piece of data
-	unsigned int chunk_size;
+	size_t chunk_size;
 	void* data;
 } vector;
 
 /**
   * initializes the vector with a length of 0 and a capacity of 1 (one chunk)
-  * returns the address of the vector array, or NULL if the allocation fails
+  * accepts the sizeof(data_type) meant to be stored in the vector
+  * returns the address of the vector, or NULL if the allocation fails
   **/
-extern void* vector_init(vector* const, const unsigned int);
+extern vector* vector_init(vector* const, const size_t);
 /**
   * frees the vector array, does not free the vector itself
   **/
-extern void vector_free(vector* const);
+extern vector* vector_free(vector* const);
 /**
-  * grows the vector capacity to atleast the number provided,
+  * grows the vector capacity to atleast the number of chunks provided,
   * following the rule of doubling the capacity every time it is less than the required amount.
   * the resulting capacity can not be less than the current capacity
   * if setCap was unable to reallocate the data to create the required capacity, NULL is returned and the vector remains unchanged
   * otherwise the address of the newly allocated data is returned
   **/
 extern void* vector_setCap(vector* const, unsigned int);
+/**
+  * grows the vector capacity to exactly the number of chunks provided
+  * if the new capacity is less than the current one, any trailing data is freed
+  * returns the same as vector_setCap
+  **/
 extern void* vector_setCapExact(vector* const, const unsigned int);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -38,6 +45,12 @@ extern void* vector_setCapExact(vector* const, const unsigned int);
   * returns the address of the addition or NULL on memory allocation error
   **/
 extern void* vector_add(vector* const, const void* const);
+/**
+  * adds buffered data to the end of the vector
+  * third argument is the number of chunks to be added
+  * returns the address of the addition
+  **/
+extern void* vector_addBuffered(vector* const, const void* const, const unsigned int);
 /**
   * replaces the value at the vector index with the index after it, following that pattern for all proceding indexes
   * returns true on success, false on failure (index out of range)
