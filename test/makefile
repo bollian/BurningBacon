@@ -1,5 +1,5 @@
 flags = -std=c99 -L../lib -lBurningBacon
-paths = -I/home/calcifer/Documents/code/BurningBacon/src
+paths = -I/home/calcifer/Documents/code/C/BurningBacon/src
 dir = bin
 
 # the release option

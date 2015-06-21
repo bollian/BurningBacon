@@ -1,0 +1,32 @@
+#!/bin/bash
+
+function recurseAndTest
+{
+	shopt -s nullglob # prevents looping when nothing is contained in directory
+	for f in $1/* # for each filename in directory (1st parameter)
+	do
+		if [ -f "$f" ] && [ -x "$f" ]
+		then
+			echo "$(basename $f) test started"
+			$f
+			exit_value=$? # $? stores the last exit value
+			if [ "" != "$output" ] # prevents printing of empty lines of output
+			then
+				echo $output
+			fi
+			
+			if [ $exit_value != 0 ] # 0 indicates success
+			then
+				echo "$(basename $f) test failed on step $exit_value"
+			else
+				echo "$(basename $f) test finished successfully"
+			fi
+		elif [ -d "$f" ]
+		then
+			recurseAndTest "$f"
+			
+		fi
+	done
+}
+
+recurseAndTest $(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/bin

@@ -5,7 +5,7 @@ src_path = src
 
 # compiler options
 flags = -c -std=c99
-paths = -I/home/calcifer/Documents/code/BurningBacon/$(src_path)
+paths = -I/home/calcifer/Documents/code/C/BurningBacon/$(src_path)
 
 all: $(lib_path) $(o_path) vector.o math.o system.o string.o
 	ar -cvr $(lib_path)/libBurningBacon.a $(o_path)/*.o
