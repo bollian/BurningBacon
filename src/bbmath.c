@@ -11,6 +11,16 @@ void factorial(int num, int* factors)
 
 }
 
+int imin(int first, int second)
+{
+	return first < second ? first : second;
+}
+
+int imax(int first, int second)
+{
+	return first > second ? first : second;
+}
+
 /*
 void addTo(byte* source, unsigned int slength, byte* destination, unsigned int dlength)
 {
