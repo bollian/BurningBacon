@@ -5,7 +5,7 @@
 
 #include "bbvector.h"
 
-vector* vector_init(vector* const vec, const unsigned int chunk_size)
+vector* vector_init(vector* const vec, const size_t chunk_size)
 {
 	vec->length = 0;
 	vec->chunk_size = chunk_size;
