@@ -1,4 +1,4 @@
-#include "math.h"
+#include <math.h>
 
 /**
  * Summary: used to get a complete factor list of a number

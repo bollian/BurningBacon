@@ -1,8 +1,8 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "bbsystem.h"
-#include "bbstring.h"
+#include <bbsystem.h>
+#include <bbstring.h>
 
 bool isLittleEndian()
 {
@@ -11,6 +11,7 @@ bool isLittleEndian()
 	return (*(char*)&n) == 1;
 }
 
+/*
 char* getTerminalParam(int argc, char* const * const argv, const char* const flag)
 {
 	const int flag_length = strlen(flag);
@@ -33,3 +34,4 @@ char* getTerminalParam(int argc, char* const * const argv, const char* const fla
 	}
 	return NULL;
 }
+*/
