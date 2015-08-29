@@ -4,14 +4,16 @@
 
 #include <bbvector.h>
 
+bool findZero(void* member, size_t size);
+
 int main(int argc, char* argv[])
 {
 	int test_count = 1;
 	bool fail = false;
 	
 	// --------------------initialization testing-------------------
-	vector vec;
-	vector_init(&vec, sizeof(int));
+	Vector vec;
+	Vector_init(&vec, sizeof(int));
 	
 	if (vec.length != 0 || vec.chunk_size != sizeof(int) || vec.data == NULL)
 	{
@@ -24,10 +26,10 @@ int main(int argc, char* argv[])
 	fail = false;
 	for (;x < 99; ++x)
 	{
-		vector_add(&vec, &x);
-		if (*(int*)vector_get(&vec, x) != x)
+		Vector_add(&vec, &x);
+		if (*(int*)Vector_get(&vec, x) != x)
 		{
-			printf("ERROR: incorrect value received from vector_get on index %d\n", x);
+			printf("ERROR: incorrect value received from Vector_get on index %d\n", x);
 			fail = true;
 		}
 	}
@@ -49,7 +51,7 @@ int main(int argc, char* argv[])
 	// --------------------removal testing--------------------------
 	for (x = 0; x < 99; ++x)
 	{
-		vector_remove(&vec, 0);
+		Vector_remove(&vec, 0);
 	}
 	if (vec.length != 0)
 	{
@@ -61,7 +63,7 @@ int main(int argc, char* argv[])
 	// --------------------insertion testing-----------------------
 	fail = false;
 	x = 72;
-	vector_insert(&vec, &x, 0);
+	Vector_insert(&vec, &x, 0);
 	if (vec.length != 1)
 	{
 		printf("ERROR: vector length was %d after insertion of 1 value\n", vec.length);
@@ -70,19 +72,19 @@ int main(int argc, char* argv[])
 	
 	for (x = 1; x < 100; ++x)
 	{
-		vector_add(&vec, &x);
+		Vector_add(&vec, &x);
 	}
 	for (; x >= 0; --x)
 	{
-		printf("%d\n", *(int*)vector_insert(&vec, &x, x));
+		printf("%d\n", *(int*)Vector_insert(&vec, &x, x));
 	}
 	
-	if (vector_insert(&vec, NULL, 0))
+	if (Vector_insert(&vec, NULL, 0))
 	{
 		printf("ERROR: Allows insertion from NULL address\n");
 		fail = true;
 	}
-	if (vector_insert(&vec, &x, vec.length + 2))
+	if (Vector_insert(&vec, &x, vec.length + 2))
 	{
 		printf("ERROR: Allows insertions to addresses outside vector bounds\n");
 		fail = true;
@@ -95,63 +97,68 @@ int main(int argc, char* argv[])
 	}
 	if (fail)
 	{
-		return ++test_count;
+		return test_count;
 	}
+	++test_count;
+	
+	//-------------------find testing--------------------------
+	void* zero = Vector_find(&vec, &findZero);
+	if (!zero)
+	{
+		printf("Zero was not found in the Vector!\n");
+		fail = true;
+	}
+	else if (*(int*)zero != 0)
+	{
+		printf("The located Zero didn't have a value of 0!\n");
+		fail = true;
+	}
+	
+	Vector_free(&vec);
+	Vector_init(&vec, sizeof(int));
+	int value = 0;
+	for (x = 0; x < 6; ++x)
+	{
+		Vector_add(&vec, &value);
+	}
+	
+	void** all_zeros;
+	int count = Vector_findAll(&vec, &findZero, &all_zeros);
+	if (count != 6)
+	{
+		printf("Num of Zeros was %d and not 6!\n", count);
+		fail = true;
+	}
+	else
+	{
+		for (x = 0; x < count; ++x)
+		{
+			printf("Index: %d\n", x);
+			if (*(int*)(all_zeros[x]) != 0)
+			{
+				printf("The list of Zeros contained %d at index %d\n", *(int*)(all_zeros[x]), x);
+				fail = true;
+			}
+		}
+	}
+	if (fail)
+	{
+		return test_count;
+	}
+	++test_count;
 	
 	return 0;
 }
-/*
-int main(int argc, char* argv[])
+
+bool findZero(void* member, size_t size)
 {
-	vector vec = { };
-	vector_init(&vec, sizeof(int));
-
-	// -------------------add and get testing-----------------------
-	int x = 0;
-	for (; x < 99; ++x)
+	if (size == sizeof(int) && (*(int*)member) == 0)
 	{
-		vector_add(&vec, &x);
-		printf("%d\n", *(int*)vector_get(&vec, x));
+		return true;
 	}
-
-	--x;
-	for (; x >= 0; --x)
+	else
 	{
-		printf("%d\n", *(int*)vector_get(&vec, x));
+		//if (sizeof())
+		return false;
 	}
-
-	// ---------------------removal testing------------------------
-	for (; x < 99; ++x)
-	{
-		vector_remove(&vec, 0);
-	}
-	for (x = 0; x < vec.length; ++x)
-	{
-		printf("Data: %d\n", *(int*)vector_get(&vec, x));
-	}
-	printf("Vector Length: %d\n", vec.length);
-
-	// ------------------insertion testing-------------------------
-	x = 72;
-	vector_insert(&vec, &x, 0);
-	printf("Vector Length after insertion: %d\n", vec.length);
-	for (x = 1; x < 99; ++x)
-	{
-		vector_add(&vec, &x);
-	}
-	for (; x > 0; --x)
-	{
-		printf("%d\n", *(int*)vector_insert(&vec, &x, x));
-	}
-	if (vector_insert(&vec, NULL, 0))
-	{
-		printf("ERROR: Allows insertion from NULL address\n");
-	}
-	if (vector_insert(&vec, &x, vec.length + 2))
-	{
-		printf("ERROR: Allows insertions to addresses outside vector bounds\n");
-	}
-	printf("Length after all insertions: %d\n", vec.length);
-
-	return 0;
-}*/
+}

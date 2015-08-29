@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 #include <bbvector.h>
+#include <bbtypes.h>
 
 Vector* Vector_init(Vector* const vec, const size_t chunk_size)
 {
@@ -132,4 +133,44 @@ void* Vector_get(const Vector* const vec, const unsigned int index)
 	{
 		return NULL; // we make it explicit that that index was out of bounds
 	}
+}
+
+void* Vector_find(const Vector* const vec, predicate* pred)
+{
+	void* tmp;
+	for (int x = 0; x < vec->length; ++x)
+	{
+		tmp = Vector_get(vec, x);
+		if (pred(tmp, vec->chunk_size))
+		{
+			return tmp;
+		}
+	}
+	return NULL;
+}
+
+int Vector_findAll(const Vector* const vec, predicate* pred, void*** matches)
+{
+	void** big_enough = malloc(vec->length * vec->chunk_size);
+	int count = 0;
+	void* tmp;
+	
+	for (int x = 0; x < vec->length; ++x)
+	{
+		tmp = Vector_get(vec, x);
+		if (pred(tmp, vec->chunk_size))
+		{
+			big_enough[count * vec->chunk_size] = tmp;
+			++count;
+		}
+	}
+	
+	*matches = malloc(count * vec->chunk_size);
+	for (int x = 0; x < count; ++x)
+	{
+		(*matches)[x * vec->chunk_size] = big_enough[x];
+	}
+	
+	free(big_enough);
+	return count;
 }

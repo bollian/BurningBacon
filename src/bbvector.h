@@ -3,9 +3,11 @@
 
 #include <stdbool.h>
 
+#include <bbtypes.h>
+
 typedef struct Vector
 {
-	// the number of bytes that can be currently held in the Vector
+	// the number of elements that can be currently held in the Vector
 	unsigned int capacity;
 	unsigned int length;
 	// the size of each piece of data
@@ -65,5 +67,13 @@ extern void* Vector_insert(Vector* const, const void* const, const unsigned int)
   * returns the address of the specified index in the Vector, NULL if the index is out of bounds
   **/
 extern void* Vector_get(const Vector* const, const unsigned int);
+/**
+  * returns the first element that matches according to the predicate, NULL if a match isn't found
+  **/
+extern void* Vector_find(const Vector* const, predicate*);
+/**
+  * searches the vector for all elements that match according to the predicate
+  **/
+extern int Vector_findAll(const Vector* const, predicate*, void***);
 
 #endif // BURNINGBACON_VECTOR_H
