@@ -1,11 +1,13 @@
 # file paths
-o_path = obj
-lib_path = lib
-src_path = src
+proj_dir = $(shell dirname $(abspath $(MAKEFILE_LIST)))
+o_path = $(proj_dir)/obj
+lib_path = $(proj_dir)/lib
+src_path = $(proj_dir)/src
 
 # compiler options
 flags = -c -std=c99
-paths = -I/home/calcifer/Documents/code/C/BurningBacon/$(src_path)
+#paths = -I/home/calcifer/Documents/code/C/BurningBacon/$(src_path)
+paths = -I$(src_path)
 
 all: $(lib_path) $(o_path) vector.o math.o system.o string.o
 	ar -cvr $(lib_path)/libBurningBacon.a $(o_path)/*.o
