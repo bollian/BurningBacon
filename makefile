@@ -5,6 +5,7 @@ lib_path = $(proj_dir)/lib
 src_path = $(proj_dir)/src
 
 # compiler options
+CC = clang
 flags = -c -std=c99
 #paths = -I/home/calcifer/Documents/code/C/BurningBacon/$(src_path)
 paths = -I$(src_path)
@@ -24,16 +25,16 @@ debug: o_path = dbg
 debug: all
 
 math.o: $(src_path)/bbmath.h $(src_path)/bbmath.c
-	gcc $(src_path)/bbmath.c -o $(o_path)/math.o $(flags) $(paths)
+	$(CC) $(src_path)/bbmath.c -o $(o_path)/math.o $(flags) $(paths)
 
 vector.o: $(src_path)/bbvector.c $(src_path)/bbvector.h
-	gcc $(src_path)/bbvector.c -o $(o_path)/vector.o $(flags) $(paths)
+	$(CC) $(src_path)/bbvector.c -o $(o_path)/vector.o $(flags) $(paths)
 
 system.o: $(src_path)/bbsystem.c $(src_path)/bbsystem.h
-	gcc $(src_path)/bbsystem.c -o $(o_path)/system.o $(flags) $(paths)
+	$(CC) $(src_path)/bbsystem.c -o $(o_path)/system.o $(flags) $(paths)
 
 string.o: $(src_path)/bbstring.c $(src_path)/bbstring.h
-	gcc $(src_path)/bbstring.c -o $(o_path)/string.o $(flags) $(paths)
+	$(CC) $(src_path)/bbstring.c -o $(o_path)/string.o $(flags) $(paths)
 
 $(lib_path):
 	mkdir $(lib_path)

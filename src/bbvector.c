@@ -45,6 +45,7 @@ void* Vector_setCap(Vector* const vec, const unsigned int cap)
 			return new_data;
 		}
 	}
+	return vec->data;
 }
 
 void* Vector_setCapExact(Vector* const vec, const unsigned int cap)
